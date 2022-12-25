@@ -278,17 +278,7 @@ namespace Bit.Core.Services
             {
                 return false;
             }
-
-            var account = await GetAccountAsync(
-                ReconcileOptions(new StorageOptions { UserId = userId }, await GetDefaultStorageOptionsAsync()));
-            if (account?.Profile?.HasPremiumPersonally.GetValueOrDefault() ?? false)
-            {
-                return true;
-            }
-
-            var organizationService = ServiceContainer.Resolve<IOrganizationService>("organizationService");
-            var organizations = await organizationService.GetAllAsync(userId);
-            return organizations?.Any(o => o.UsersGetPremium && o.Enabled) ?? false;
+            return true;
         }
 
         public async Task<string> GetProtectedPinAsync(string userId = null)
